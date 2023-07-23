@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: ./go_streaming_app
+      dockerfile: Dockerfile
+    image: streaming_backend
+    container_name: backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./go_streaming_app/videos:/app/videos
+    networks:
+      - streaming_network
+
+  frontend:
+    build:
+      context: ./streaming_app_frontend
+      dockerfile: Dockerfile
+    image: streaming_frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - streaming_network
+
+networks:
+  streaming_network:
